@@ -177,7 +177,7 @@ int LinuxParser::RunningProcesses() {
 // DONE: Read and return the command associated with a process
 string LinuxParser::Command(int pid) { 
   string fline, ans;
-  std::ifstream fstream(kProcDirectory + kCmdlineFilename + to_string(pid));
+  std::ifstream fstream(kProcDirectory + to_string(pid) + kCmdlineFilename );
 
   if (fstream.is_open())
   {
@@ -253,7 +253,7 @@ long LinuxParser::UpTime(int pid) {
     for (int i = 0; i < 22; i++)
       l_stream >> t;
 
-    return stol(t) /sysconf(_SC_CLK_TCK);
+    return UpTime() - stol(t) /sysconf(_SC_CLK_TCK);
   } 
 
   return 0;
